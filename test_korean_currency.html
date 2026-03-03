@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>원화표시기 v1.2.0 - 한국어 통화 패턴 테스트</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: white;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5em;
+    }
+
+    .subtitle {
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 1.1em;
+    }
+
+    .test-section {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      color: #2d3748;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #667eea;
+      font-size: 1.5em;
+    }
+
+    .test-item {
+      padding: 15px;
+      margin: 10px 0;
+      background: #f7fafc;
+      border-left: 4px solid #667eea;
+      border-radius: 6px;
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+
+    .test-item strong {
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .category {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .highlight {
+      background: linear-gradient(120deg, #fef08a 0%, #fde68a 100%);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .info-box h3 {
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+
+    .info-box p {
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    code {
+      background: #2d3748;
+      color: #48bb78;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95em;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+
+    .status.new {
+      background: #48bb78;
+      color: white;
+    }
+
+    .status.existing {
+      background: #cbd5e0;
+      color: #2d3748;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💱 원화표시기 v1.2.0</h1>
+    <p class="subtitle">한국어 통화 패턴 지원 테스트 페이지</p>
+
+    <div class="info-box">
+      <h3>🎉 새로운 기능</h3>
+      <p>
+        이제 <strong>"2,000억 달러"</strong>, <strong>"100만 달러"</strong> 같은<br>
+        한국어 단위 + 한국어 통화명 조합도 자동으로 원화로 변환됩니다!
+      </p>
+    </div>
+
+    <!-- 새로운 패턴 테스트 -->
+    <div class="test-section">
+      <h2>✨ 새로운 패턴 (v1.2.0) <span class="status new">NEW</span></h2>
+      
+      <div class="test-item">
+        <span class="category">기본</span><br>
+        트럼프는 <span class="highlight">2,000억 달러</span> 규모의 인프라 투자를 발표했습니다.
+      </div>
+
+      <div class="test-item">
+        <span class="category">기본</span><br>
+        애플의 시가총액이 <span class="highlight">3조 달러</span>를 돌파했습니다.
+      </div>
+
+      <div class="test-item">
+        <span class="category">기본</span><br>
+        이번 프로젝트 예산은 <span class="highlight">100만 달러</span>입니다.
+      </div>
+
+      <div class="test-item">
+        <span class="category">소수점</span><br>
+        SEC 벌금으로 <span class="highlight">1.5억 달러</span>를 부과했습니다.
+      </div>
+
+      <div class="test-item">
+        <span class="category">음수</span><br>
+        분기 손실액이 <span class="highlight">-500억 달러</span>를 기록했습니다.
+      </div>
+
+      <div class="test-item">
+        <span class="category">공백 없이</span><br>
+        중국의 외환보유고는 <span class="highlight">3000억달러</span> 수준입니다.
+      </div>
+
+      <div class="test-item">
+        <span class="category">여러 개</span><br>
+        작년 매출 <span class="highlight">500억 달러</span>, 올해 목표 <span class="highlight">700억 달러</span>입니다.
+      </div>
+    </div>
+
+    <!-- 기존 패턴 (여전히 작동) -->
+    <div class="test-section">
+      <h2>✅ 기존 패턴 (v1.0.0~) <span class="status existing">기존</span></h2>
+      
+      <div class="test-item">
+        <span class="category">달러 기호</span><br>
+        비트코인 가격: <span class="highlight">$45,000</span>
+      </div>
+
+      <div class="test-item">
+        <span class="category">k 단위</span><br>
+        나스닥 지수: <span class="highlight">$15.5k</span>
+      </div>
+
+      <div class="test-item">
+        <span class="category">억 단위 ($)</span><br>
+        삼성전자 시가총액: <span class="highlight">$300억</span>
+      </div>
+
+      <div class="test-item">
+        <span class="category">USDT</span><br>
+        바이낸스 일일 거래량: <span class="highlight">50억 USDT</span>
+      </div>
+
+      <div class="test-item">
+        <span class="category">USD 접미사</span><br>
+        테슬라 매출: <span class="highlight">100b USD</span>
+      </div>
+
+      <div class="test-item">
+        <span class="category">음수 PnL</span><br>
+        오늘 손익: <span class="highlight">-$1,234.56</span>
+      </div>
+
+      <div class="test-item">
+        <span class="category">한글 + 영문</span><br>
+        펀드 규모: <span class="highlight">5조 USDC</span>
+      </div>
+    </div>
+
+    <!-- 혼합 테스트 -->
+    <div class="test-section">
+      <h2>🔥 혼합 시나리오</h2>
+      
+      <div class="test-item">
+        <span class="category">뉴스 기사</span><br>
+        OpenAI가 마이크로소프트로부터 <span class="highlight">100억 달러</span> 투자를 유치했으며, 
+        현재 기업가치는 <span class="highlight">$80b</span>로 평가됩니다. 
+        작년 매출은 <span class="highlight">16억 USDT</span>였습니다.
+      </div>
+
+      <div class="test-item">
+        <span class="category">실전 예시</span><br>
+        BTC 시가총액: <span class="highlight">$900b</span><br>
+        ETH 시가총액: <span class="highlight">2000억 달러</span><br>
+        일일 거래량: <span class="highlight">150억 USDT</span><br>
+        내 포지션: <span class="highlight">-$5.2k</span> (손실)
+      </div>
+    </div>
+
+    <!-- 사용 방법 -->
+    <div class="test-section">
+      <h2>📘 지원 형식</h2>
+      
+      <div style="line-height: 2; color: #4a5568;">
+        <strong style="color: #2d3748;">✅ 자동 변환되는 형식:</strong><br>
+        • <code>$숫자</code> → $100, $5.5k, $2억<br>
+        • <code>숫자 USD/USDT/USDC</code> → 100 USD, 5k USDT<br>
+        • <code>숫자 만/억/조 달러</code> → 100만 달러, 5억 달러 <span class="status new">NEW</span><br>
+        • <code>음수</code> → -$100, -1억 달러<br>
+        • <code>소수점</code> → $1.5k, 2.5억 달러<br><br>
+
+        <strong style="color: #2d3748;">🎯 단위 인식:</strong><br>
+        • 영어: k(천), m(백만), b(십억), t(조)<br>
+        • 한국어: 만, 억, 조
+      </div>
+    </div>
+  </div>
+</body>
+</html>

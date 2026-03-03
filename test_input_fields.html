@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Field Test - KRW Master</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .contenteditable {
+            border: 2px solid #ddd;
+            padding: 10px;
+            min-height: 60px;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .display-text {
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .success {
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #f87171;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 Input Field Test - 원화표시기</h1>
+    <p>이 페이지는 입력 필드에서 통화 변환이 발생하지 않는지 테스트합니다.</p>
+
+    <div class="test-section">
+        <h3>1. Text Input (일반 입력창)</h3>
+        <p>❌ 여기는 변환되면 안 됩니다:</p>
+        <input type="text" placeholder="$128 또는 128달러를 입력해보세요" />
+
+        <p>✅ 여기는 변환되어야 합니다:</p>
+        <div class="display-text">
+            Price: $128 | 가격: 128달러
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>2. Textarea (텍스트 영역)</h3>
+        <p>❌ 여기는 변환되면 안 됩니다:</p>
+        <textarea rows="4" placeholder="$250 USDT 등을 입력해보세요"></textarea>
+
+        <p>✅ 여기는 변환되어야 합니다:</p>
+        <div class="display-text">
+            Total amount: $250 USDT
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>3. ContentEditable (편집 가능한 div)</h3>
+        <p>❌ 여기는 변환되면 안 됩니다:</p>
+        <div class="contenteditable" contenteditable="true">
+            여기에 $500 또는 €100을 입력해보세요
+        </div>
+
+        <p>✅ 여기는 변환되어야 합니다:</p>
+        <div class="display-text">
+            Budget: $500 | 예산: €100
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>4. Search Input (검색창)</h3>
+        <p>❌ 여기는 변환되면 안 됩니다:</p>
+        <input type="search" placeholder="$1000 상품 검색" />
+
+        <p>✅ 여기는 변환되어야 합니다:</p>
+        <div class="display-text">
+            Search result: iPhone 15 Pro - $1000
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>5. 다양한 통화 테스트</h3>
+        <p>❌ 입력창 (변환 X):</p>
+        <input type="text" placeholder="¥1000 JPY 또는 100万円" />
+
+        <p>✅ 일반 텍스트 (변환 O):</p>
+        <div class="display-text">
+            • USD: $99.99
+            • USDT: 500 USDT
+            • EUR: €50
+            • JPY: ¥10000
+            • CNY: ¥500 CNY
+            • Korean: 100만달러, 5억원
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>6. Rich Text Editor 시뮬레이션</h3>
+        <p>❌ Quill 에디터 (변환 X):</p>
+        <div class="ql-editor contenteditable" contenteditable="true"
+            style="border: 2px solid #ddd; padding: 10px; min-height: 80px; background: white;">
+            <p>Quill 에디터에서 $999를 입력해보세요</p>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>✅ 테스트 결과 확인</h3>
+        <ul>
+            <li>입력 필드 내부 텍스트는 <strong>변환되지 않아야</strong> 합니다</li>
+            <li>일반 텍스트는 <strong>변환되어야</strong> 합니다</li>
+            <li>페이지 로드 후 즉시 변환이 적용되는지 확인</li>
+            <li>입력 중에도 변환이 발생하지 않는지 확인</li>
+        </ul>
+    </div>
+</body>
+
+</html>

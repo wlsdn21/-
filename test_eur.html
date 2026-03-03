@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EUR Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .test-case {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #667eea;
+        }
+
+        h3 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        .price {
+            font-size: 18px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .note {
+            color: #666;
+            font-size: 14px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🇪🇺 EUR 변환 테스트</h1>
+    <p class="note">팝업에서 EUR 토글을 ON으로 설정하세요!</p>
+
+    <div class="test-case">
+        <h3>1. 기본 유로 기호 (€)</h3>
+        <div class="price">Price: €35.96</div>
+        <div class="price">Total: €99.99</div>
+        <div class="price">Cost: €1,234.56</div>
+        <div class="price">Budget: €500</div>
+    </div>
+
+    <div class="test-case">
+        <h3>2. 유로 접미사 (EUR)</h3>
+        <div class="price">100 EUR</div>
+        <div class="price">1,500 EUR</div>
+        <div class="price">50.5 EUR</div>
+        <div class="price">2500.99 EUR</div>
+    </div>
+
+    <div class="test-case">
+        <h3>3. 한국어 표기 (유로)</h3>
+        <div class="price">100유로</div>
+        <div class="price">1,000유로</div>
+        <div class="price">50만유로</div>
+        <div class="price">5억유로</div>
+    </div>
+
+    <div class="test-case">
+        <h3>4. 단위 포함 (K, M, B)</h3>
+        <div class="price">€5K</div>
+        <div class="price">€1.5M EUR</div>
+        <div class="price">€100K EUR</div>
+        <div class="price">€2.5B</div>
+    </div>
+
+    <div class="test-case">
+        <h3>5. 마이너스 금액</h3>
+        <div class="price">-€50.00</div>
+        <div class="price">-100 EUR</div>
+        <div class="price">Loss: -€1,234.56</div>
+    </div>
+
+    <div class="test-case">
+        <h3>6. 실제 상황 (쇼핑몰 스타일)</h3>
+        <div class="price">Product A: €29.99</div>
+        <div class="price">Product B: €149.00</div>
+        <div class="price">Shipping: €5.95</div>
+        <div class="price">Total: €184.94</div>
+    </div>
+
+    <div class="test-case">
+        <h3>✅ 확인 사항</h3>
+        <ul>
+            <li>모든 EUR 금액 옆에 <strong>(₩...)</strong> 형식의 원화 변환이 표시되어야 합니다</li>
+            <li>EUR 토글이 OFF일 때는 변환되지 않아야 합니다</li>
+            <li>입력창에서는 변환되지 않아야 합니다 (아래 테스트)</li>
+        </ul>
+        <input type="text" placeholder="여기에 €100을 입력해보세요" style="width: 100%; padding: 10px; margin-top: 10px;">
+    </div>
+</body>
+
+</html>
