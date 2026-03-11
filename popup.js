@@ -1,4 +1,4 @@
-﻿// Popup Logic
+// Popup Logic
 
 "use strict";
 
@@ -55,15 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (status === 'success') {
             statusIndicator.classList.add('status-success');
-            statusIndicator.title = '갱신 성공';
+            statusIndicator.title = 'Refresh successful';
         } else if (status === 'failed') {
             statusIndicator.classList.add('status-error');
-            statusIndicator.title = '갱신 실패 (재시도 중)';
+            statusIndicator.title = 'Refresh failed (retrying)';
         } else if (status === 'loading') {
             statusIndicator.classList.add('status-loading');
-            statusIndicator.title = '갱신 중...';
+            statusIndicator.title = 'Refreshing';
         } else {
-            statusIndicator.title = '대기 중';
+            statusIndicator.title = 'Idle';
         }
     }
 
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 rateValue.textContent = PopupCore.formatRate(result.usdkrw, rateSource);
             } else {
                 // If no data found, don't show 1300. Show real status.
-                rateValue.textContent = '환율 정보 없음';
+                rateValue.textContent = 'No rate data';
                 // Trigger refresh
                 chrome.runtime.sendMessage({ action: 'refreshRate' });
             }
@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show error message if API failed
             if (result.lastFetchError && status === 'failed') {
                 // Add subtle error indicator
-                const errorHint = ` (오류: ${result.lastFetchError.substring(0, 30)}...)`;
-                if (!lastUpdate.textContent.includes('오류')) {
+                const errorHint = ` (????怨몄뵒: ${result.lastFetchError.substring(0, 30)}...)`;
+                if (!lastUpdate.textContent.includes('????怨몄뵒')) {
                     lastUpdate.textContent += errorHint;
                 }
             }
@@ -265,9 +265,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ✅ 인라인 에러 메시지 툧퍼: alert() 대체
+    // Inline error helper to replace alert()
     function showInlineError(inputEl, message) {
-        // 기존 에러 제거
+        // ???뚯????????????곌퇈?뗦틦?
         const existing = inputEl.parentElement.querySelector('.inline-error');
         if (existing) existing.remove();
 
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         err.textContent = message;
         inputEl.parentElement.appendChild(err);
 
-        // 3초 후 자동 제거
+        // 3???????嶺????곌퇈?뗦틦?
         setTimeout(() => err.remove(), 3000);
     }
 
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveCustomRateBtn.addEventListener('click', () => {
         const val = parseFloat(customRateInput.value);
         if (isNaN(val) || val <= 0) {
-            showInlineError(customRateInput, '유효한 환율을 입력해주세요.');
+            showInlineError(customRateInput, '????ъ군???????볥궙筌??????怨몄７????κ땁??癲ル슢????');
             return;
         }
 
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Feedback
             const originalText = saveCustomRateBtn.textContent;
-            saveCustomRateBtn.textContent = '저장됨!';
+            saveCustomRateBtn.textContent = '???逆곷틳爰덂퐲?';
             setTimeout(() => {
                 saveCustomRateBtn.textContent = originalText;
             }, 1500);
@@ -370,9 +370,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Calculate and display Kimchi Premium
-     * ✅ 수정: popup에서 직접 fetch 제거 → background가 주기적으로 저장한
-     *    storage 캐시를 읽는 방식으로 변경
-     */
+     * ??????볥궚?? popup??????꿔꺂?????fetch ???곌퇈?뗦틦???background??醫딆쓧? ???녿뮝??怨룸렓????쇨덫嶺뚮ㅏ諭?????嚥싳쇎紐??
+     *    storage ??????됰씞嫄??????됲닓 ?熬곣뫖?삥납?????Β????⑤슢堉???     */
     async function updatePremiumInfo() {
         try {
             const storage = await chrome.storage.local.get([
@@ -382,13 +381,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const standardRate = storage.standardRate;
             const usdkrw = storage.usdkrw;
 
-            // 표준 환율이 없으면 프리미엄 계산 불가
+            // ??? ????볥궙筌??????ㅼ굡?類㎮뵾?????썼キ?κ괌?됰챷??嚥??ョ솾???影??낟?????곗뵯??
             if (!standardRate || !usdkrw) return;
 
-            // Upbit 계열 옵션 내 설명에 현재 저장된 usdkrw 기반 프리미엄 표시
-            // (background가 30초마다 업비트 실가를 저장하면 여기서 읽음)
-            const upbitUsdt = storage.upbitUsdt; // background가 저장하면 사용, 없으면 usdkrw 대체
-            const upbitUsdc = storage.upbitUsdc;
+            // Upbit ??影??낟??????????????⑸윞??????썹땟?????逆곷틳爰덂퐲?usdkrw ???뚯???維◈?????썼キ?κ괌?됰챷??嚥??ョ솾???嶺?筌?
+            // (background??醫딆쓧? 30?潁?熬?留??????戮?폇??????????嚥싳쇎紐??鶯????????????
+            const upbitUsdt = storage.upbitUsdt; // background??醫딆쓧? ???嚥싳쇎紐??鶯????? ????ㅼ굡?類㎮뵾?usdkrw ????            const upbitUsdc = storage.upbitUsdc;
 
             const usdtPrice = upbitUsdt || usdkrw;
             const usdcPrice = upbitUsdc || usdkrw;
@@ -397,14 +395,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (usdtDescEl) {
                 const premium = PopupCore.calculatePremium(usdtPrice, standardRate);
                 const sign = premium >= 0 ? '+' : '';
-                usdtDescEl.textContent = `김치 프리미엄 ${sign}${premium.toFixed(2)}% (₩${usdtPrice.toLocaleString()})`;
+                usdtDescEl.textContent = `?μ떜媛????????썼キ?κ괌?됰챷??嚥??ョ솾?${sign}${premium.toFixed(2)}% (??{usdtPrice.toLocaleString()})`;
             }
 
             const usdcDescEl = document.querySelector('.rate-source-option[data-source="upbit_usdc"] .option-desc');
             if (usdcDescEl) {
                 const premium = PopupCore.calculatePremium(usdcPrice, standardRate);
                 const sign = premium >= 0 ? '+' : '';
-                usdcDescEl.textContent = `김치 프리미엄 ${sign}${premium.toFixed(2)}% (₩${usdcPrice.toLocaleString()})`;
+                usdcDescEl.textContent = `?μ떜媛????????썼キ?κ괌?됰챷??嚥??ョ솾?${sign}${premium.toFixed(2)}% (??{usdcPrice.toLocaleString()})`;
             }
 
         } catch (e) {
@@ -455,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 navigator.clipboard.writeText(text).then(() => {
                     // Success Feedback
                     const originalText = btn.textContent;
-                    btn.textContent = '복사됨!';
+                    btn.textContent = '??⑤슢?뽫뵓怨????';
                     btn.style.background = '#4CAF50';
                     btn.style.color = 'white';
 
@@ -575,8 +573,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (enabledSites.length === 0) {
             sitesList.innerHTML = `
                 <div class="empty-sites">
-                    <div class="empty-sites-icon">🌐</div>
-                    <div class="empty-sites-text">등록된 사이트가 없습니다</div>
+                    <div class="empty-sites-icon">???/div>
+                    <div class="empty-sites-text">?嚥싲갭큔?댁쉩???????癲? ????ㅿ폍??????딅젩</div>
                 </div>
             `;
             return;
@@ -595,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const siteIcon = document.createElement('span');
             siteIcon.className = 'site-icon';
-            siteIcon.textContent = '🌐';
+            siteIcon.textContent = 'URL';
 
             const siteName = document.createElement('span');
             siteName.className = 'site-name';
@@ -607,7 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const removeBtn = document.createElement('button');
             removeBtn.className = 'remove-site-btn';
             removeBtn.dataset.site = site;
-            removeBtn.textContent = '제거';
+            removeBtn.textContent = 'Remove';
 
             // Add event listener directly here, no need to querySelectorAll later
             removeBtn.addEventListener('click', () => {
@@ -640,8 +638,8 @@ document.addEventListener('DOMContentLoaded', () => {
         site = PopupCore.validateSite(site);
 
         if (!site || site.length < 3) {
-            // ✅ alert() → 인라인 에러
-            showInlineError(newSiteInput, '유효한 사이트를 입력해주세요.');
+            // ??alert() ???癲ル슢??遺셋???????
+            showInlineError(newSiteInput, '????ъ군???????癲? ????怨몄７????κ땁??癲ル슢????');
             return;
         }
 
@@ -649,8 +647,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const enabledSites = result.enabledSites || DEFAULT_SITES;
 
             if (enabledSites.includes(site)) {
-                // ✅ alert() → 인라인 에러
-                showInlineError(newSiteInput, '이미 등록된 사이트입니다.');
+                // ??alert() ???癲ル슢??遺셋???????
+                showInlineError(newSiteInput, '???? ?嚥싲갭큔?댁쉩???????癲ル슢???브덩?????딅젩.');
                 return;
             }
 
@@ -766,7 +764,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ==================== NOTIFICATIONS ====================
     const newsNotifyToggle = document.getElementById('newsNotifyToggle');
-    const testNotifyBtn = document.getElementById('testNotifyBtn');
 
     // Load initial state
     chrome.storage.local.get(['newsNotifyEnabled'], (result) => {
@@ -784,206 +781,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (testNotifyBtn) {
-        testNotifyBtn.addEventListener('click', () => {
-            // Request permission first (optional in extension but good practice)
-            chrome.notifications.create({
-                type: 'basic',
-                iconUrl: 'icon128.png',
-                title: '[KRW Master] 🇺🇸 CPI (YoY) - TEST',
-                message: '실제: 3.4% / 예상: 3.2%\n(알림 테스트입니다)',
-                priority: 2
-            }, (notificationId) => {
-                // If it fails (e.g. no permission), alert user
-                if (chrome.runtime.lastError) {
-                    alert('알림을 표시할 수 없습니다: ' + chrome.runtime.lastError.message);
-                }
-            });
-        });
-    }
-
-
-
     // ==================== ECONOMIC INDICATORS ====================
     const refreshIndicatorsBtn = document.getElementById('refreshIndicatorsBtn');
     const indicatorsList = document.getElementById('indicatorsList');
 
     function getImpactStars(impact) {
-        if (impact === 'High') return '⭐⭐⭐';
-        if (impact === 'Medium') return '⭐⭐';
-        if (impact === 'Low') return '⭐';
+        if (impact === 'High') return 'High';
+        if (impact === 'Medium') return 'Medium';
+        if (impact === 'Low') return 'Low';
         return '';
     }
 
-    // Translation Dictionaries
-    // Comprehensive Translation Dictionaries
+    // Keep translation data minimal and safe for the initial launch.
     const COUNTRY_MAP = {
-        // 3-Letter Codes (generated by background.js) & Common Names
-        'USA': '미국', 'UNI': '미국', 'US': '미국',
-        'EUR': '유럽', 'EMU': '유럽', 'EU': '유럽',
-        'JPN': '일본', 'JAP': '일본', 'JP': '일본',
-        'CHN': '중국', 'CHI': '중국', 'CN': '중국',
-        'UK': '영국', 'GBR': '영국', 'GRE': '영국',
-        'CAN': '캐나다', 'CA': '캐나다',
-        'AUS': '호주', 'AU': '호주',
-        'NZL': '뉴질랜드', 'NEW': '뉴질랜드', 'NZ': '뉴질랜드',
-        'CHE': '스위스', 'SWI': '스위스', 'CH': '스위스',
-        'KOR': '한국', 'SOU': '한국', 'KR': '한국',
-        // Additional Countries
-        'ARG': '아르헨티나', 'BOL': '볼리비아', 'BRA': '브라질',
-        'IND': '인도', 'IDN': '인도네시아', 'MOR': '모로코',
-        'EAS': '동티모르', 'SIN': '싱가포르', 'NET': '네덜란드',
-        'DEN': '덴마크', 'NOR': '노르웨이', 'TUR': '튀르키예',
-        'MAL': '말레이시아', 'PAL': '팔레스타인', 'TAI': '대만',
-        'HON': '홍콩', 'POL': '폴란드', 'BEL': '벨기에',
-        'FRA': '프랑스', 'HUN': '헝가리', 'IRE': '아일랜드',
-        'LAT': '라트비아', 'MEX': '멕시코', 'COL': '콜롬비아',
-        'GER': '독일', 'ITA': '이탈리아', 'SPA': '스페인',
-        'POR': '포르투갈', 'SWE': '스웨덴', 'RUS': '러시아',
-        'SAU': '사우디', 'ZAR': '남아공'
+        'USA': 'United States',
+        'UNI': 'United States',
+        'US': 'United States',
+        'EUR': 'Europe',
+        'EMU': 'Europe',
+        'EU': 'Europe',
+        'JPN': 'Japan',
+        'JAP': 'Japan',
+        'JP': 'Japan',
+        'CHN': 'China',
+        'CHI': 'China',
+        'CN': 'China',
+        'UK': 'United Kingdom',
+        'GBR': 'United Kingdom',
+        'GRE': 'United Kingdom',
+        'KOR': 'Korea',
+        'SOU': 'Korea',
+        'KR': 'Korea',
+        'CAN': 'Canada',
+        'CA': 'Canada',
+        'AUS': 'Australia',
+        'AU': 'Australia',
+        'NZL': 'New Zealand',
+        'NEW': 'New Zealand',
+        'NZ': 'New Zealand',
+        'CHE': 'Switzerland',
+        'SWI': 'Switzerland',
+        'CH': 'Switzerland'
     };
 
-    const TERM_MAP = [
-        // Holidays & Events
-        { en: /Bank Holiday/i, ko: '휴장' },
-        { en: /Foundation Day/i, ko: '건국기념일' },
-        { en: /World Economic Forum/i, ko: '세계경제포럼(다보스포럼)' },
-        { en: /Annual Meeting/i, ko: '연례 회의' },
-        { en: /Meeting/i, ko: '회의' },
-        { en: /Summit/i, ko: '정상회담' },
-
-        // Central Bank & Interest Rates
-        { en: /Interest Rate Decision/i, ko: '금리 결정' },
-        { en: /Monetary Policy Statement/i, ko: '통화정책 성명서' },
-        { en: /Monetary Policy Meeting Accounts/i, ko: '통화정책 회의록' },
-        { en: /FOMC Meeting Minutes/i, ko: 'FOMC 회의록' },
-        { en: /FOMC Economic Projections/i, ko: 'FOMC 경제 전망' },
-        { en: /Fed Chair .* Speaks/i, ko: '연준 의장 연설' },
-        { en: /ECB President .* Speaks/i, ko: 'ECB 총재 연설' },
-        { en: /BOE Gov .* Speaks/i, ko: 'BOE 총재 연설' },
-        { en: /RBA Gov .* Speaks/i, ko: 'RBA 총재 연설' },
-        { en: /Speaks/i, ko: '연설' },
-        { en: /Minutes/i, ko: '회의록' },
-        { en: /Fed Balance Sheet/i, ko: '연준 대차대조표' },
-        { en: /Overnight Lending Rate/i, ko: '익일물 대출 금리' },
-        { en: /Overnight Borrowing Rate/i, ko: '익일물 차입 금리' },
-        { en: /Bill Auction/i, ko: '단기국채 입찰' },
-        { en: /Bond Auction/i, ko: '국채 입찰' },
-        { en: /Note Auction/i, ko: '국채 입찰' },
-        { en: /TIPS Auction/i, ko: '물가연동국채 입찰' },
-        { en: /OAT Auction/i, ko: '프랑스 국채(OAT) 입찰' },
-        { en: /Gilt Auction/i, ko: '영국 국채(Gilt) 입찰' },
-        { en: /Bund Auction/i, ko: '독일 국채(Bund) 입찰' },
-
-        // Employment
-        { en: /Non-Farm Employment Change/i, ko: '비농업 고용 변화' },
-        { en: /Unemployment Rate/i, ko: '실업률' },
-        { en: /Initial Jobless Claims/i, ko: '신규 실업수당 청구' },
-        { en: /Jobless Claims 4-week Average/i, ko: '실업수당 청구 4주 평균' },
-        { en: /Continuing Jobless Claims/i, ko: '연속 실업수당 청구' },
-        { en: /Average Hourly Earnings/i, ko: '시간당 평균 임금' },
-        { en: /Participation Rate/i, ko: '경제활동 참가율' },
-        { en: /Job Openings/i, ko: '구인 건수(JOLTs)' },
-        { en: /Employment Change/i, ko: '고용 변화' },
-        { en: /Full Time Employment/i, ko: '풀타임 고용' },
-        { en: /Part Time Employment/i, ko: '파트타임 고용' },
-        { en: /Chg/i, ko: '변동' },
-
-        // Inflation
-        { en: /Core PCE Price Index/i, ko: '근원 PCE 물가지수' },
-        { en: /PCE Price Index/i, ko: 'PCE 물가지수' },
-        { en: /PCE Prices/i, ko: 'PCE 물가' },
-        { en: /Core CPI/i, ko: '근원 소비자 물가지수' },
-        { en: /CPI/i, ko: '소비자 물가지수' },
-        { en: /Core PPI/i, ko: '근원 생산자 물가지수' },
-        { en: /PPI/i, ko: '생산자 물가지수' },
-        { en: /Inflation Rate/i, ko: '인플레이션율' },
-        { en: /Inflation Expectations/i, ko: '기대 인플레이션' },
-        { en: /Wholesale Prices/i, ko: '도매 물가' },
-        { en: /Import Price Index/i, ko: '수입 물가지수' },
-        { en: /Export Price Index/i, ko: '수출 물가지수' },
-
-        // GDP & Economy
-        { en: /GDP Growth Rate/i, ko: 'GDP 성장률' },
-        { en: /GDP/i, ko: '국내총생산(GDP)' },
-        { en: /Leading Indicator/i, ko: '경기 선행 지수' },
-        { en: /Industrial Production/i, ko: '산업 생산' },
-        { en: /Manufacturing Production/i, ko: '제조업 생산' },
-        { en: /Capacity Utilization/i, ko: '설비 가동률' },
-        { en: /Factory Orders/i, ko: '공장 수주' },
-        { en: /Durable Goods Orders/i, ko: '내구재 수주' },
-        { en: /Corporate Profits/i, ko: '기업 이익' },
-        { en: /Personal Income/i, ko: '개인 소득' },
-        { en: /Personal Spending/i, ko: '개인 지출' },
-        { en: /Real Consumer Spending/i, ko: '실질 소비자 지출' },
-        { en: /Fed Composite Index/i, ko: '연준 종합 지수' },
-        { en: /Manufacturing Index/i, ko: '제조업 지수' },
-
-        // PMI & Sentiment
-        { en: /ISM Manufacturing PMI/i, ko: 'ISM 제조업 PMI' },
-        { en: /ISM Non-Manufacturing PMI/i, ko: 'ISM 비제조업 PMI' },
-        { en: /Services PMI/i, ko: '서비스업 PMI' },
-        { en: /Manufacturing PMI/i, ko: '제조업 PMI' },
-        { en: /Construction PMI/i, ko: '건설업 PMI' },
-        { en: /Consumer Confidence/i, ko: '소비자 신뢰지수' },
-        { en: /Consumer Sentiment/i, ko: '소비자 심리지수' },
-        { en: /Economic Sentiment/i, ko: '경제 심리지수' },
-        { en: /Business Confidence/i, ko: '기업 신뢰지수' },
-        { en: /Business Barometer/i, ko: '기업 체감 지수' },
-        { en: /CBI Distributive Trades/i, ko: 'CBI 유통 판매 지수' },
-
-        // Housing
-        { en: /Building Permits/i, ko: '건축 허가' },
-        { en: /Housing Starts/i, ko: '주택 착공' },
-        { en: /Existing Home Sales/i, ko: '기존 주택 판매' },
-        { en: /New Home Sales/i, ko: '신규 주택 판매' },
-        { en: /Pending Home Sales/i, ko: '잠정 주택 판매' },
-        { en: /House Price Index/i, ko: '주택 가격 지수' },
-        { en: /Housing Price Index/i, ko: '주택 가격 지수' },
-        { en: /Mortgage Rate/i, ko: '모기지 금리' },
-
-        // Trade & Balance
-        { en: /Trade Balance/i, ko: '무역 수지' },
-        { en: /Balance of Trade/i, ko: '무역 수지' },
-        { en: /Current Account/i, ko: '경상 수지' },
-        { en: /Exports/i, ko: '수출' },
-        { en: /Imports/i, ko: '수입' },
-        { en: /Retail Sales/i, ko: '소매 판매' },
-        { en: /Wholesale Inventories/i, ko: '도매 재고' },
-        { en: /Business Inventories/i, ko: '기업 재고' },
-        { en: /Foreign Exchange Reserves/i, ko: '외환 보유고' },
-        { en: /Money Supply/i, ko: '통화량' },
-
-        // Energy
-        { en: /Crude Oil Inventories/i, ko: '원유 재고' },
-        { en: /Gasoline Inventories/i, ko: '가솔린 재고' },
-        { en: /Heating Oil Stocks/i, ko: '난방유 재고' },
-        { en: /Natural Gas Stocks/i, ko: '천연가스 재고' },
-        { en: /Distillate Stocks/i, ko: '증류유 재고' },
-        { en: /Crude Oil Imports/i, ko: '원유 수입' },
-        { en: /Refinery Crude Runs/i, ko: '정유 공장 가동량' },
-        { en: /Distillate Fuel Production/i, ko: '증류 연료 생산' },
-        { en: /Gasoline Production/i, ko: '가솔린 생산' },
-
-        // Modifiers & Time
-        { en: /Prelim/i, ko: '(잠정)' },
-        { en: /Flash/i, ko: '(속보)' },
-        { en: /Final/i, ko: '(확정)' },
-        { en: /Revised/i, ko: '(수정)' },
-        { en: /Core/i, ko: '근원' },
-        { en: /Ex-Food and Energy/i, ko: '(식품/에너지 제외)' },
-        { en: /Ex Banks/i, ko: '(은행 제외)' },
-        { en: /Year over Year/i, ko: '(전년비)' },
-        { en: /Quarter over Quarter/i, ko: '(전분기비)' },
-        { en: /Month over Month/i, ko: '(전월비)' },
-        { en: /Mid-month/i, ko: '월중' },
-        { en: /\(YoY\)/i, ko: '(전년비)' },
-        { en: /\(QoQ\)/i, ko: '(전분기비)' },
-        { en: /\(MoM\)/i, ko: '(전월비)' },
-        { en: /YoY/i, ko: '(전년비)' },
-        { en: /QoQ/i, ko: '(전분기비)' },
-        { en: /MoM/i, ko: '(전월비)' }
-    ];
+    const TERM_MAP = [];
 
     function translateText(text) {
         if (!text) return text;
@@ -1036,7 +877,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!filteredEvents || filteredEvents.length === 0) {
-            indicatorsList.innerHTML = '<div class="loading-spinner">표시할 데이터가 없습니다</div>';
+            indicatorsList.innerHTML = '<div class="loading-spinner">??嶺?筌???????????? ????ㅿ폍??????딅젩</div>';
             return;
         }
 
@@ -1075,8 +916,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="event-meta">
                         <span class="event-currency">${translateCountry(event.country)}</span>
                         <span class="event-impact">${getImpactStars(event.impact)}</span>
-                        ${event.actual ? `<span class="event-actual" title="실제값">Act: ${event.actual}</span>` : ''}
-                        ${event.forecast ? `<span class="event-forecast" title="예상값">Est: ${event.forecast}</span>` : ''}
+                        ${event.actual ? `<span class="event-actual" title="???繹먮냱議??>Act: ${event.actual}</span>` : ''}
+                        ${event.forecast ? `<span class="event-forecast" title="????壤??>Est: ${event.forecast}</span>` : ''}
                     </div>
                 </div>
             `;
@@ -1192,14 +1033,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadEconomicEvents() {
         if (!indicatorsList) return;
 
-        indicatorsList.innerHTML = '<div class="loading-spinner">데이터 불러오는 중...</div>';
+        indicatorsList.innerHTML = '<div class="loading-spinner">????????????곗뵯??????紐꾪닓 嚥?..</div>';
 
         chrome.runtime.sendMessage({ action: "fetchEconomicEvents" }, (response) => {
             if (response && response.success) {
                 currentEvents = response.events; // Store raw data
                 renderEconomicEvents(currentEvents);
             } else {
-                indicatorsList.innerHTML = `<div class="loading-spinner">데이터 로드 실패: ${response.error || 'Unknown error'}</div>`;
+                indicatorsList.innerHTML = `<div class="loading-spinner">??????????汝??吏??좉텣??????곌숯: ${response.error || 'Unknown error'}</div>`;
             }
         });
     }
