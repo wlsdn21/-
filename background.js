@@ -352,7 +352,15 @@ async function fetchUsdKrwRate(startIndex = 0) {
 async function fetchExchangeRate() {
 
 
-    const storage = await chrome.storage.local.get(['rateSource', 'currentApiIndex', 'usdkrw', 'lastFetchTime']);
+    const storage = await chrome.storage.local.get([
+        'rateSource',
+        'currentApiIndex',
+        'usdkrw',
+        'lastFetchTime',
+        'customRateValue',
+        'standardRate',
+        'lastStandardFetch'
+    ]);
     const rateSource = storage.rateSource || RATE_SOURCE.USD_KRW;
     const startIndex = storage.currentApiIndex || 0;
     const lastFetchTime = storage.lastFetchTime || 0;

@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function updatePremiumInfo() {
         try {
             const storage = await chrome.storage.local.get([
-                'standardRate', 'usdkrw', 'rateSource'
+                'standardRate', 'usdkrw', 'rateSource', 'upbitUsdt', 'upbitUsdc'
             ]);
 
             const standardRate = storage.standardRate;
@@ -1231,6 +1231,10 @@ document.addEventListener('DOMContentLoaded', () => {
             loadData();
         }
 
+        const premiumKeys = ['usdkrw', 'standardRate', 'upbitUsdt', 'upbitUsdc', 'rateSource'];
+        if (premiumKeys.some(key => changes[key])) {
+            updatePremiumInfo();
+        }
         // Multi-currency Toggles
         if (changes.eurEnabled && eurToggle) eurToggle.checked = changes.eurEnabled.newValue;
         if (changes.jpyEnabled && jpyToggle) jpyToggle.checked = changes.jpyEnabled.newValue;
