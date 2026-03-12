@@ -385,9 +385,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!standardRate || !usdkrw) return;
 
             // Upbit ??影??낟??????????????⑸윞??????썹땟?????逆곷틳爰덂퐲?usdkrw ???뚯???維◈?????썼キ?κ괌?됰챷??嚥??ョ솾???嶺?筌?
-            // (background??醫딆쓧? 30?潁?熬?留??????戮?폇??????????嚥싳쇎紐??鶯????????????
-            const upbitUsdt = storage.upbitUsdt; // background??醫딆쓧? ???嚥싳쇎紐??鶯????? ????ㅼ굡?類㎮뵾?usdkrw ????            const upbitUsdc = storage.upbitUsdc;
-
+            // Prefer cached Upbit prices when available; fall back to usdkrw.
+            const upbitUsdt = storage.upbitUsdt;
+            const upbitUsdc = storage.upbitUsdc;
             const usdtPrice = upbitUsdt || usdkrw;
             const usdcPrice = upbitUsdc || usdkrw;
 
@@ -395,14 +395,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (usdtDescEl) {
                 const premium = PopupCore.calculatePremium(usdtPrice, standardRate);
                 const sign = premium >= 0 ? '+' : '';
-                usdtDescEl.textContent = `?μ떜媛????????썼キ?κ괌?됰챷??嚥??ョ솾?${sign}${premium.toFixed(2)}% (??{usdtPrice.toLocaleString()})`;
+                usdtDescEl.textContent = `기준 환율 대비 ${sign}${premium.toFixed(2)}% (₩${usdtPrice.toLocaleString()})`;
             }
 
             const usdcDescEl = document.querySelector('.rate-source-option[data-source="upbit_usdc"] .option-desc');
             if (usdcDescEl) {
                 const premium = PopupCore.calculatePremium(usdcPrice, standardRate);
                 const sign = premium >= 0 ? '+' : '';
-                usdcDescEl.textContent = `?μ떜媛????????썼キ?κ괌?됰챷??嚥??ョ솾?${sign}${premium.toFixed(2)}% (??{usdcPrice.toLocaleString()})`;
+                usdcDescEl.textContent = `기준 환율 대비 ${sign}${premium.toFixed(2)}% (₩${usdcPrice.toLocaleString()})`;
             }
 
         } catch (e) {
